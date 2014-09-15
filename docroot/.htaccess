@@ -140,10 +140,10 @@ DirectoryIndex index.php index.html index.htm
 
   # Redirect camerontod.com to the handsome men's club
   RewriteCond     ${HTTP_HOST}    camerontod\.com [NC]
-  RewriteRule     ^(.*)$  https://www.youtube.com/watch?v=MyGJXLxtVEo [R=302]
+  RewriteRule     ^(.*)$  https://www.youtube.com/watch?v=MyGJXLxtVEo [L,R=302]
 
   # Redirect rubytod.com to the Kaiser Chiefs
-  RewriteCond     ${HTTP_HOST} rubytod\.com [NC]
-  RewriteRule     ^(.*)$  https://www.youtube.com/watch?v=qObzgUfCl28 [R=302]
+  RewriteCond     ${HTTP_HOST} ^rubytod\.com$ [NC]
+  RewriteRule     ^(.*)$  https://www.youtube.com/watch?v=qObzgUfCl28 [L,R=302]
 
 </IfModule>
