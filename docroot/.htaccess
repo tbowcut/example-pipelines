@@ -57,8 +57,8 @@ DirectoryIndex index.php index.html index.htm
   RewriteEngine on
 
   # Redirect camerontod.com to the handsome men's club
-  #RewriteCond     ${HTTP_HOST}    camerontod\.com [NC]
-  #RewriteRule     ^(.*)$  https://www.youtube.com/watch?v=MyGJXLxtVEo [L,R=302]
+  RewriteCond     ${HTTP_HOST} ^camerontod.com
+  RewriteRule     ^(.*)$  https://www.youtube.com/watch?v=MyGJXLxtVEo [L,R=302]
 
   # Redirect rubytod.com to the Kaiser Chiefs
   RewriteCond     %{HTTP_HOST} ^rubytod.com
