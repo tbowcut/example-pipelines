@@ -56,6 +56,16 @@ DirectoryIndex index.php index.html index.htm
 <IfModule mod_rewrite.c>
   RewriteEngine on
 
+  # Redirect camerontod.com to the handsome men's club
+  #RewriteCond     ${HTTP_HOST}    camerontod\.com [NC]
+  #RewriteRule     ^(.*)$  https://www.youtube.com/watch?v=MyGJXLxtVEo [L,R=302]
+
+  # Redirect rubytod.com to the Kaiser Chiefs
+  RewriteCond     %{HTTP_HOST} ^rubytod.com
+  RewriteRule     ^(.*)  https://www.youtube.com/watch?v=qObzgUfCl28 [L,R=302]
+
+
+
   # Set "protossl" to "s" if we were accessed via https://.  This is used later
   # if you enable "www." stripping or enforcement, in order to ensure that
   # you don't bounce between http and https.
@@ -136,14 +146,5 @@ DirectoryIndex index.php index.html index.htm
       Header append Vary Accept-Encoding
     </FilesMatch>
   </IfModule>
-
-
-  # Redirect camerontod.com to the handsome men's club
-  RewriteCond     ${HTTP_HOST}    camerontod\.com [NC]
-  RewriteRule     ^(.*)$  https://www.youtube.com/watch?v=MyGJXLxtVEo [L,R=302]
-
-  # Redirect rubytod.com to the Kaiser Chiefs
-  RewriteCond     ${HTTP_HOST} ^rubytod\.com$ [NC]
-  RewriteRule     ^(.*)$  https://www.youtube.com/watch?v=qObzgUfCl28 [L,R=302]
 
 </IfModule>
