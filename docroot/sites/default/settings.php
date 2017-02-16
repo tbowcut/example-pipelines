@@ -38,6 +38,8 @@ if (file_exists($ac_settings_path)) {
   }
 }
 
+$config_directories['vcs'] = $app_root . '/../config/' . basename($site_path);
+
 $settings['update_free_access'] = FALSE;
 $settings['container_yamls'][] = __DIR__ . '/services.yml';
 
