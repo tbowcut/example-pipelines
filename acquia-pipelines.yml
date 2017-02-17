@@ -2,15 +2,23 @@ version: 1.0.0
 variables:
   global:
     N3_KEY: d973a74f-2b8d-4d58-b24d-8db8faa52aa8
+    # For the POC to work, you must add the N3_SECRET environment variable
+    # containing your Cloud API secret key:
+    #
+    # echo -n 'your secret' | pipelines encrypt - --add variables.global.N3_SECRET
     N3_SECRET:
       secure: 2acpv8H5efcrtWrwtC7BzaAABtEaGFEBWOSdkRuoEreo4EvDWlGuu19gJ3exMvt3lpG3YiWQSRUkZwx+9e/sKRHJnQRkV+WMV7jzokXZ7W3GwKgA9z8wU3Qxg6HdOoeUz8ytS4m3ct/HZXlpFYX1+2/nUDGVn/eb0utB6Jt/dqhMdHssPUC3BKTHq5+8INhdpqJ4dg9cBjxOhr5OghH238D40iV6jYSinIm9UseYgca//k3g1zryqXFs1ga4TM2ku2jVoo7l5+9HR5pnG4TxBO1iENhkLTGFDo+KI02MKOFS5+aouBXevulYfvEicp8N0689XawsU+afKj4lQz8t8OB3tM+f5BNv5teN87BN7tGLaKZGeCzCxGrB10zGnif8c6Xrduvy9+P3DXSDkGEgxIBclusMyG8KQPx6EiwgcR4i7iDt3MT3N0XFdx+UWVT2ye3/P7IbVZAGov0pnFPoOYaXmffsxzR0P7C/cBwDvWCI3+fCmgXX9yQCSSo1YPdkV2BFNiXHT7tm3Qa2qSo5TseiLkcAQWAbitJq1ZrlXJ/SQUpDviLXgj1e3va7lXkHZrmhP+PI7LNOFlSoUFfvMbafpyLpZJA7bufn/dYrRtW7Uqg+fk5tRSYEw+Dl+qffNw3DGLq2RNLY3NLYIEYoZ61i+kqqc/+Oy42gSvJM7nkOL4=O6a5IvhOoiqARISsY7Z/Yu4PqRhfwov/42b3yrX2v3h1NlGCdf8LlCGj8QeWLoL5V0ptPYyLAyOIlSXjJEx6VCjHqQUBbd8zMU9QyJ5Ch2xCZRyZ8Rxwo33fXDOGAiNyChP/Y6RA+soseQOuVH9kU3+hr26bNux3chi9vyEI2X0=
 events:
   build:
     steps:
+      # Put your build instructions here.  This POC has no site, so no build.
       -
         build_site:
           script:
             - 'echo "Put your build instructions here."'
+      # The "deploy" step runs the proof-of-concept code. Later, this
+      # functionality will be built into Pipelines directly and controlled via
+      # YAML.
       -
         deploy:
           script:
