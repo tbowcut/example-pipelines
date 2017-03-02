@@ -1,5 +1,5 @@
 version: 1.0.0
-
+# From https://github.com/acquia/pipelines-examples/tree/master/tutorial-701
 variables:
   global:
     # Paste your n3_key from ~/.acquia/pipelines/credentials on the next line.
