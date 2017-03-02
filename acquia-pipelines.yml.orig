@@ -1,36 +1,32 @@
 version: 1.0.0
-
+# From https://github.com/acquia/pipelines-examples/tree/master/tutorial-701
 variables:
   global:
+    # Paste your n3_key from ~/.acquia/pipelines/credentials on the next line.
     N3_KEY: 'your key'
-    # For the POC to work, you must add the N3_SECRET environment variable
-    # containing your Cloud API secret key:
-    #
-    # echo -n 'your secret' | pipelines encrypt - --add variables.global.N3_SECRET
+    # Run this command to securely add your Cloud API secret key:
+    #   awk '/n3_secret/ { printf("%s", $2) }' ~/.acquia/pipelines/credentials | pipelines encrypt - --add variables.global.N3_SECRET
+    PIPELINES_DEPLOY_URL: https://github.com/acquia/pipelines-examples/releases/download/deploy-latest/pipelines-deploy
+    PIPELINES_DEPLOY_TOOL: $HOME/pipelines-deploy
 
 events:
   build:
     steps:
-      # Put your build instructions here.  This POC has no site, so no build.
+      # If you have build instructions, put them here. They are not required.
       - build_site:
           script:
-            - echo "Put your build instructions here."
-      # The "deploy" step runs the proof-of-concept code. Later, this
-      # functionality will be built into Pipelines directly and controlled via
-      # YAML.
+            - echo "Put your build instructions, if any, here."
+
+      # Deploy the build artifact to a Cloud on-demand environment.
       - deploy:
           script:
-            - cd environments
-            - composer install
-            - php cloud-ode.php
+            - curl -o $PIPELINES_DEPLOY_TOOL "$PIPELINES_DEPLOY_URL" && chmod 755 $PIPELINES_DEPLOY_TOOL
+            - $PIPELINES_DEPLOY_TOOL
 
   merge:
     steps:
-      # The "deploy" step runs the proof-of-concept code. Later, this
-      # functionality will be built into Pipelines directly and controlled via
-      # YAML.
+      # When a GitHub pull request is merged, this deletes the coresponding ODE.
       - deploy:
           script:
-            - cd environments
-            - composer install
-            - php cloud-ode.php
+            - curl -o $PIPELINES_DEPLOY_TOOL "$PIPELINES_DEPLOY_URL" && chmod 755 $PIPELINES_DEPLOY_TOOL
+            - $PIPELINES_DEPLOY_TOOL
