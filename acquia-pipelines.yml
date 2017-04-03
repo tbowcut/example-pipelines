@@ -28,10 +28,12 @@ events:
           type: script
           script:
             - set -x
-            - mysql -uroot -proot -e 'CREATE DATABASE drupal;'
-            - ./bin/phing install -Ddb.password=root -Ddb.database=drupal
-            # Add the Acquia cloud database snippet to the settings file.
-            - ./bin/phing cloud-db-snippet
+            # Create database for new Drupal install. Settings.php can't have creds in it, otherwise Drupal throws AlreadyInstalledException
+            - mysql -u root -proot -e "CREATE DATABASE drupal"
+            # Move to the docroot to run drush
+            - cd docroot
+            # Use drush to install the default profile. Change if you want different drush arguments. Mysql must be on 127.0.0.1. Silencing a drush si mail issue. Pass in newly created database called drupal
+            - /usr/bin/env PHP_OPTIONS="-d sendmail_path=`which true`" ../vendor/bin/drush site-install -yv lightning --db-url=mysql://root:root@127.0.0.1:3306/drupal
       # Run some tests.
       - test:
           type: script
