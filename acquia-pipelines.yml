@@ -19,7 +19,7 @@ events:
     steps:
       # Build the codebase.
       - composer:
-        - type: script
+          type: script
           script:
             - composer validate --no-check-all --ansi
             - composer install
