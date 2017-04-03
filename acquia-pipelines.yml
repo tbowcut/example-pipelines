@@ -1,7 +1,7 @@
 # This file defines an Acquia Pipelines build for the Lightning project.
 # It builds Lightning and runs its functional tests.
 version: 1.0.0
-servies:
+services:
   - mysql
 variables:
   global:
@@ -18,7 +18,8 @@ events:
   build:
     steps:
       # Build the codebase.
-      - build_site:
+      - composer:
+        - type: script
           script:
             - composer validate --no-check-all --ansi
             - composer install
@@ -27,7 +28,7 @@ events:
           type: script
           script:
             - set -x
-            - mysql -u root -proot -e 'CREATE DATABASE drupal;'
+            - mysql -uroot -proot -e 'CREATE DATABASE drupal;'
             - ./bin/phing install -Ddb.password=root -Ddb.database=drupal
             # Add the Acquia cloud database snippet to the settings file.
             - ./bin/phing cloud-db-snippet
