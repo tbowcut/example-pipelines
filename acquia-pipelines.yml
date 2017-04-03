@@ -1,4 +1,8 @@
-version: 1.0.0
+# This file defines an Acquia Pipelines build for the Lightning project.
+# It builds Lightning and runs its functional tests.
+version: 1.1.0
+servies:
+  - mysql
 variables:
   global:
     N3_KEY: d973a74f-2b8d-4d58-b24d-8db8faa52aa8
@@ -13,17 +17,37 @@ variables:
 events:
   build:
     steps:
-      # If you have build instructions, put them here. They are not required.
+      # Build the codebase.
       - build_site:
           script:
-            - echo "Put your build instructions, if any, here."
+            - composer validate --no-check-all --ansi
+            - composer install
+      # Install Drupal ready for testing.
+      - install:
+          type: script
+          script:
+            - set -x
+            - mysql -u root -proot -e 'CREATE DATABASE drupal;'
+            - ./bin/phing install -Ddb.password=root -Ddb.database=drupal
+            # Add the Acquia cloud database snippet to the settings file.
+            - ./bin/phing cloud-db-snippet
+      # Run some tests.
+      - test:
+          type: script
+          script:
+            - set -x
+            - cd docroot
+            - ../bin/drush runserver --default-server=builtin 8080 &>/dev/null &
+            - ../bin/phantomjs --webdriver=4444 > /dev/null &
+            - sleep 10
+            - ../bin/behat --stop-on-failure --config ./sites/default/files/behat.yml
 
       # Deploy the build artifact to a Cloud on-demand environment.
       - deploy:
           script:
             - curl -o $PIPELINES_DEPLOY_TOOL "$PIPELINES_DEPLOY_URL" && chmod 755 $PIPELINES_DEPLOY_TOOL
             - $PIPELINES_DEPLOY_TOOL
-
+ # Reacts to a PR merge event.
   merge:
     steps:
       # When a GitHub pull request is merged, this deletes the coresponding ODE.
