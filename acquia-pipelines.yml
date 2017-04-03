@@ -1,6 +1,6 @@
 # This file defines an Acquia Pipelines build for the Lightning project.
 # It builds Lightning and runs its functional tests.
-version: 1.1.0
+version: 1.0.0
 servies:
   - mysql
 variables:
