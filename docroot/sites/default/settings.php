@@ -11,7 +11,7 @@
  */
 
 // Acquia Cloud docroot name.
-$ac_docroot = 'camerontod';
+$ac_docroot = 'eepraman';
 // If this is a multisite, specify the site DB name here.
 $site = NULL;
 
