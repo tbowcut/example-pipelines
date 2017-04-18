@@ -1,4 +1,2 @@
 This dummy file is used to demonstrate triggering a pipelines build.
-It's super cool.
-Demo CDE + CDP
-GLO WUZ HERE
+Demo for McCall and CSS Industries, DPCI !!
